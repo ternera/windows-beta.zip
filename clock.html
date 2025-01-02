@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown to June 19, 2027</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #add8e6; /* Changed to light blue */
+            overflow: hidden; /* Prevent scrollbars */
+            margin: 0; /* Remove default margin */
+            background-image: radial-gradient(circle, #e0e0e0, #c0c0c0); /* Monitor screen effect */
+        }
+        #countdown {
+            text-align: center;
+            font-size: 8em; /* Increased font size further */
+            z-index: 1; /* Ensure countdown is above balloons */
+            position: fixed; /* Fixed position to prevent movement */
+            top: 50%; /* Center vertically */
+            transform: translateY(-50%); /* Adjust for vertical centering */
+        }
+        .balloon {
+            position: absolute;
+            bottom: -100px;
+            width: 50px;
+            height: 70px;
+            background-color: red;
+            border-radius: 50%;
+            animation: float 5s infinite;
+            z-index: 0; /* Place balloons in the background */
+        }
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-300px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+        @media (max-width: 600px) {
+            #countdown {
+                font-size: 4em; /* Adjust font size for smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="countdown"></div>
+    <div class="balloon" style="left: 20%; animation-delay: 0s;"></div>
+    <div class="balloon" style="left: 40%; animation-delay: 1s;"></div>
+    <div class="balloon" style="left: 60%; animation-delay: 2s;"></div>
+    <div class="balloon" style="left: 80%; animation-delay: 3s;"></div>
+
+    <script>
+        function updateCountdown() {
+            const targetDate = new Date('June 19, 2027 14:30:00').getTime();
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown').innerHTML = 
+                days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+            if (distance < 0) {
+                document.getElementById('countdown').innerHTML = "EXPIRED";
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
