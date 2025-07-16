@@ -60,27 +60,52 @@
     <div class="balloon" style="left: 80%; animation-delay: 3s;"></div>
 
     <script>
-        function updateCountdown() {
-            const targetDate = new Date('June 19, 2027 14:30:00').getTime();
-            const now = new Date().getTime();
-            const distance = targetDate - now;
+function updateCountdown() {
+      const now = new Date();
+      const targetDate = new Date('June 19, 2027 14:30:00');
 
-            const years = Math.floor(distance / (1000 * 60 * 60 * 24 * 365));
-            const months = Math.floor((distance % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
-            const days = Math.floor((distance % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      if (now >= targetDate) {
+        document.getElementById('countdown').innerText = "EXPIRED";
+        return;
+      }
 
-            document.getElementById('countdown').innerHTML = 
-                years + "y " + months + "mo " + days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+      let years = targetDate.getFullYear() - now.getFullYear();
+      let months = targetDate.getMonth() - now.getMonth();
+      let days = targetDate.getDate() - now.getDate();
+      let hours = targetDate.getHours() - now.getHours();
+      let minutes = targetDate.getMinutes() - now.getMinutes();
+      let seconds = targetDate.getSeconds() - now.getSeconds();
 
-            if (distance < 0) {
-                document.getElementById('countdown').innerHTML = "EXPIRED";
-            }
-        }
+      if (seconds < 0) {
+        seconds += 60;
+        minutes--;
+      }
+      if (minutes < 0) {
+        minutes += 60;
+        hours--;
+      }
+      if (hours < 0) {
+        hours += 24;
+        days--;
+      }
 
-        setInterval(updateCountdown, 1000);
+      if (days < 0) {
+        const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+        days += prevMonth.getDate();
+        months--;
+      }
+
+      if (months < 0) {
+        months += 12;
+        years--;
+      }
+
+      document.getElementById('countdown').innerText = 
+        `${years}y ${months}mo ${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
     </script>
 </body>
 </html>
