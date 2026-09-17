@@ -11,43 +11,85 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #add8e6; /* Changed to light blue */
-            overflow: hidden; /* Prevent scrollbars */
-            margin: 0; /* Remove default margin */
-            background-image: radial-gradient(circle, #e0e0e0, #c0c0c0); /* Monitor screen effect */
+            background-color: #add8e6;
+            overflow: hidden;
+            margin: 0;
+            background-image: radial-gradient(circle, #e0e0e0, #c0c0c0);
         }
         #countdown {
             text-align: center;
-            font-size: 8em; /* Increased font size further */
-            z-index: 1; /* Ensure countdown is above balloons */
-            position: fixed; /* Fixed position to prevent movement */
-            top: 50%; /* Center vertically */
-            transform: translateY(-50%); /* Adjust for vertical centering */
+            font-size: 8em;
+            z-index: 1;
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
         }
         .balloon {
             position: absolute;
             bottom: -100px;
-            width: 50px;
-            height: 70px;
-            background-color: red;
-            border-radius: 50%;
-            animation: float 5s infinite;
-            z-index: 0; /* Place balloons in the background */
+          width: 58px;
+          height: 74px;
+          background: radial-gradient(circle at 30% 25%, #ff8a8a 0 8%, #f44336 38%, #b40000 100%);
+          border-radius: 50% 50% 45% 45%;
+          box-shadow: inset -7px -8px 10px rgba(100, 0, 0, 0.24), 0 4px 8px rgba(0, 0, 0, 0.18);
+          animation: float 7s ease-in-out infinite;
+            z-index: 0;
+        }
+        .balloon::before {
+          content: "";
+          position: absolute;
+          left: 50%;
+          bottom: -7px;
+          width: 12px;
+          height: 12px;
+          background: #b40000;
+          transform: translateX(-50%) rotate(45deg);
+          border-radius: 2px;
+        }
+        .balloon::after {
+          content: "";
+          position: absolute;
+          left: 50%;
+          top: 80px;
+          width: 2px;
+          height: 190px;
+          background: #111;
+          transform: translateX(-50%) rotate(var(--string-angle, 2deg));
+          transform-origin: top center;
+          opacity: 0.85;
+        }
+        .balloon:nth-of-type(2) {
+          --string-angle: -4deg;
+          animation-delay: -1.5s;
+          animation-duration: 8.5s;
+        }
+        .balloon:nth-of-type(3) {
+          --string-angle: 5deg;
+          animation-delay: -3.2s;
+          animation-duration: 6.5s;
+        }
+        .balloon:nth-of-type(4) {
+          --string-angle: -3deg;
+          animation-delay: -4.4s;
+          animation-duration: 9s;
         }
         @keyframes float {
             0% {
-                transform: translateY(0);
+            transform: translate(0, 0) rotate(-3deg);
             }
-            50% {
-                transform: translateY(-300px);
+          35% {
+            transform: translate(22px, -250px) rotate(5deg);
+          }
+          68% {
+            transform: translate(-18px, -470px) rotate(-5deg);
             }
             100% {
-                transform: translateY(0);
+            transform: translate(8px, -720px) rotate(3deg);
             }
         }
         @media (max-width: 600px) {
             #countdown {
-                font-size: 4em; /* Adjust font size for smaller screens */
+                font-size: 4em;
             }
         }
     </style>
